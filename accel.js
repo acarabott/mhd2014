@@ -26,12 +26,12 @@ var dsp = {
         }
     },
 
-    rampmul: function(buf, bufStep, rampStart, rampStep, out, outStep, size) {
-      for (var i = 0; i < size; i++) {
-        out[i * outStep] = rampStart * buf[i * bufStep];
-        rampStart += rampStep;
-      }
-    },
+    // rampmul: function(buf, bufStep, rampStart, rampStep, out, outStep, size) {
+    //   for (var i = 0; i < size; i++) {
+    //     out[i * outStep] = rampStart * buf[i * bufStep];
+    //     rampStart += rampStep;
+    //   }
+    // },
 
     mul: function(buf1, buf1Step, buf2, buf2step, out, outStep, size) {
         for (var i = 0; i < size; i++) {
