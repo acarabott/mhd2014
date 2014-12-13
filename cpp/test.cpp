@@ -96,6 +96,15 @@ void test_vDSP_vsmul(const int size, int stride=2)
     print(out, size);
     cout << "BAD RESULT?" << endl;
 };
+// -----------------------------------------------------------------------------
+void test_vDSP_vfill(const int size, int stride=1)
+{
+    float out[size];
+    float val = 1.f;
+
+    vDSP_vfill(&val, out, stride, size);
+    print(out, size);
+};
 // void test_vDSP_vmul(const int size, int stride=1)
 // {
 //     cout << "mul" << endl;
@@ -116,7 +125,7 @@ void test_vDSP_vsmul(const int size, int stride=2)
 void test_vDSP_vclip(const int size) { };
 void test_vDSP_vramp(const int size) { };
 
-void test_vDSP_vfill(const int size) { };
+
 void test_vDSP_meanv(const int size) { };
 
 int main(int argc, char const *argv[])
@@ -125,7 +134,8 @@ int main(int argc, char const *argv[])
     // test_copy(10);
     // test_vDSP_vadd(10);
     // test_vDSP_vsma(10);
-    test_vDSP_vsmul(10);
+    test_vDSP_vfill(10);
+    // test_vDSP_vsmul(10);
 
     // vDSP_vadd(audio + audioOffset, 1, scratch, 1, audio + audioOffset, 1, fadeInTime);
     // vDSP_vsma(scratch, 1, &((*i)->multL), audio + audioOffset, 2, audio + audioOffset, 2, fadeInTime);
