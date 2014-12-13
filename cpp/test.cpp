@@ -161,7 +161,21 @@ void test_vDSP_vramp(const int size, int stride=1) {
 };
 
 
-void test_vDSP_meanv(const int size) { };
+void test_vDSP_meanv(const int size, int stride=1)
+{
+    cout << "mean" << endl;
+
+    float in[size];
+    float start = 0.f;
+    float end = 1.f;
+    float step = (end - start) / size;
+    vDSP_vramp(&start, &step, in, 1, size);
+    print(in, size);
+
+    float out;
+    vDSP_meanv(in, stride, &out, size);
+    cout << out << endl;
+};
 
 int main(int argc, char const *argv[])
 {
@@ -172,14 +186,9 @@ int main(int argc, char const *argv[])
     // test_vDSP_vsma(10);
     // test_vDSP_vsmul(10);
     // test_vDSP_vclip(128);
-    test_vDSP_vramp(10);
-
-    // vDSP_meanv(ampScaleBuffer, 1, &smoothedAmpScale, ampScaleBufferCount);
-    // vDSP_vsmul(audio, 1, &smoothedAmpScale, audio, 1, bufferSize * channelMode);
-    // vDSP_vclip(audio, 1, &lowclip, &highclip, audio, 1, bufferSize * channelMode);
-    // vDSP_vramp(&foStart, &foStep, scratch, 1, channelMode * bufferSize);
-    // vDSP_vmul(scratch, 1, audio, 1, audio, 1, channelMode * bufferSize);
-    // vDSP_vfill(&ampScale, ampScaleBuffer, 1, ampScaleBufferCount);
+    // test_vDSP_vramp(10);
+    // test_vDSP_meanv(10);
+    test_vDSP_vmul(10);
 
     return 0;
 }
