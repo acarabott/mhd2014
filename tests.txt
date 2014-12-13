@@ -19,7 +19,7 @@ mul:
 add:
   add a buffer containing 1s to a buffer containing -1s, check zero
 
-add:
+mulAdd:
   ada a buffer containing 2s with a mul of 0.5 to a buffer containing -1s, check
   zero
 

@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>tests for accel.js</title>
+<style>
+  .failed {
+    background-color: red;
+  }
+  .success {
+    background-color: lime;
+  }
+</style>
+</head>
+  <body>
+    <ul id=tests>
+    </ul>
+    <script src=accel.js></script>
+    <script>
+window.onload = function() {
+  function $(a) {
+    return document.querySelector(a);
+  }
+
+  var ARRAY_SIZE = 256;
+  function random_array() {
+    var a = new Float32Array(ARRAY_SIZE);
+    for (var i = 0; i < ARRAY_SIZE; i++) {
+      a[i] = Math.random() * 2 - 1;
+    }
+    return a;
+  }
+
+  function clipped_sine_buffer() {
+    var a = new Float32Array(ARRAY_SIZE);
+    for (var i = 0; i < ARRAY_SIZE; i++) {
+      a[i] = 2 * Math.sin(Math.PI * 440 * 2 * i / 44100);
+    }
+    return a;
+  }
+
+  function ones_array() {
+    var a = new Float32Array(ARRAY_SIZE);
+    for (var i = 0; i < ARRAY_SIZE; i++) {
+      a[i] = 1.0;
+    }
+    return a;
+  }
+  function twos_array() {
+    var a = new Float32Array(ARRAY_SIZE);
+    for (var i = 0; i < ARRAY_SIZE; i++) {
+      a[i] = 2.0;
+    }
+    return a;
+  }
+  function minus_ones_array() {
+    var a = new Float32Array(ARRAY_SIZE);
+    for (var i = 0; i < ARRAY_SIZE; i++) {
+      a[i] = -1.0;
+    }
+    return a;
+  }
+
+  function fuzzEqual(lhs, rhs) {
+    var epsilon = 0.1;
+    return (Math.abs(lhs) - Math.abs(rhs)) < epsilon;
+  }
+  var testcases = {
+    "clr": function() {
+      var input = random_array();
+      dsp.clr(input, 1, ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (input[i] != 0) {
+          return {
+            status: false,
+            message: "input is not zero at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements are zero"
+      };
+    },
+    "copy": function() {
+      var input = random_array();
+      var output = new Float32Array(ARRAY_SIZE);
+      dsp.copy(input, output, ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (input[i] != output[i]) {
+          return {
+            status: false,
+            message: "output is different at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been copied"
+      };
+    },
+    "ramp": function() {
+      var output = new Float32Array(ARRAY_SIZE);
+      dsp.ramp(0.0, 1.0 / ARRAY_SIZE, output, 1, ARRAY_SIZE);
+      var reference = new Float32Array(ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        reference[i] = i / ARRAY_SIZE;
+      }
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (reference[i] != output[i]) {
+          return {
+            status: false,
+            message: "output is different at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "ramp is correct"
+      };
+    },
+    "mul": function() {
+      var input1 = ones_array();
+      var output = new Float32Array(ARRAY_SIZE);
+      var ramp = new Float32Array(ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        ramp[i] = i / ARRAY_SIZE;
+      }
+      dsp.mul(input1, 1, ramp, 1, output, 1, ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (ramp[i] != output[i]) {
+          return {
+            status: false,
+            message: "output is different at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been copied"
+      };
+    },
+    "add": function() {
+      var input1 = ones_array();
+      var input2 = minus_ones_array();
+      var output = new Float32Array(ARRAY_SIZE);
+      dsp.mul(input1, 1, input2, 1, output, 1, ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (output[i] == 0) {
+          return {
+            status: false,
+            message: "output is not null at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been added"
+      };
+    },
+    "mulAdd": function() {
+      var input1 = twos_array();
+      var input2 = minus_ones_array();
+      var output = new Float32Array(ARRAY_SIZE);
+      dsp.mulAdd(input1, 1, 0.5, input2, 1, output, 1, ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (output[i] != 0) {
+          return {
+            status: false,
+            message: "output is not null at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been added"
+      };
+    },
+    "mean": function() {
+      var output = new Float32Array(ARRAY_SIZE);
+      var input = new Float32Array(ARRAY_SIZE);
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        input[i] = i / ARRAY_SIZE;
+      }
+      dsp.mean(input, 1, output, ARRAY_SIZE);
+      if (!fuzzEqual(output[0], 0.5)) {
+        return {
+          status: false,
+          message: "output is not 0.5, it's " + output[0]
+        };
+      }
+      return {
+        status: true,
+        message: "mean is fuzzy-correct"
+      };
+    },
+    "mean": function() {
+      var output = new Float32Array(ARRAY_SIZE);
+
+      dsp.fill(1.0, output, 1, ARRAY_SIZE);
+
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (output[i] != 1.0) {
+          return {
+            status: false,
+            message: "output is not 1.0 at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been filed"
+      };
+    },
+    "clip": function() {
+      var output = new Float32Array(ARRAY_SIZE);
+      var input = clipped_sine_buffer(ARRAY_SIZE);
+
+      dsp.clip(input, 1, -1.0, 1.0, output, 1, ARRAY_SIZE);
+
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (output[i] < -1.0 && output[i] > 1.0) {
+          return {
+            status: false,
+            message: "output is not 1.0 at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been filed"
+      };
+    }
+  };
+
+var root = $("#tests");
+
+function test_all(prefix) {
+  for (var i in testcases) {
+    console.log(i);
+    var e = testcases[i];
+    var rv = e();
+    var el = document.createElement("li");
+    console.log(rv.status);
+    el.className = rv.status ? "success" : "failed";
+    el.innerHTML = "[" + prefix + "] " + i + ": " + rv.message;
+    root.appendChild(el);
+  }
+}
+
+["SIMD", "SCALAR"].forEach(function(e) {
+  test_all(e);
+});
+}
+    </script>
+  </body>
+</html>
