@@ -16,7 +16,7 @@ void fill(float* buf, int size, float val)
         buf[i] = val;
     }
 }
-
+// -----------------------------------------------------------------------------
 void print(float*buf, int size)
 {
     cout << setprecision(PREC) << std::showpoint;
@@ -131,7 +131,7 @@ void test_vDSP_vmul(const int size, int stride=1)
 
     vDSP_vmul(in1, stride, in2, stride, out, stride, size);
 };
-
+// -----------------------------------------------------------------------------
 void test_vDSP_vclip(const int size, int stride=1)
 {
     cout << "clip" << endl;
@@ -147,7 +147,7 @@ void test_vDSP_vclip(const int size, int stride=1)
     vDSP_vclip(in, stride, &min, &max, out, stride, size);
     print(out, size);
 };
-
+// -----------------------------------------------------------------------------
 void test_vDSP_vramp(const int size, int stride=1) {
     cout << "ramp" << endl;
 
@@ -159,8 +159,7 @@ void test_vDSP_vramp(const int size, int stride=1) {
     vDSP_vramp(&start, &step, out, stride, size);
     print(out, size);
 };
-
-
+// -----------------------------------------------------------------------------
 void test_vDSP_meanv(const int size, int stride=1)
 {
     cout << "mean" << endl;
@@ -176,7 +175,7 @@ void test_vDSP_meanv(const int size, int stride=1)
     vDSP_meanv(in, stride, &out, size);
     cout << out << endl;
 };
-
+// =============================================================================
 int main(int argc, char const *argv[])
 {
     // test_vDSP_vfill(10);
