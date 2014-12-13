@@ -30,7 +30,8 @@ void test_vDSP_vclr1(const int size)
 {
     cout << "clr" << endl;
     float in[size];
-    fill(in, size, 1.f);
+    float val = 1.f;
+    vDSP_vfill(&val, in, 1, size);
     print(in, size);
     vDSP_vclr(in, 1, size);
     print(in, size);
@@ -41,8 +42,8 @@ void test_copy(const int size)
 {
     cout << "copy" << endl;
     float in[size];
-    fill(in, size, 1.f);
-    print(in, size);
+    float val = 1.f;
+    vDSP_vfill(&val, in, 1, size);
     print(in, size);
 }
 // -----------------------------------------------------------------------------
@@ -50,11 +51,13 @@ void test_vDSP_vadd(const int size, int stride=1)
 {
     cout << "add" << endl;
     float in1[size];
-    fill(in1, size, 1.f);
+    float val1 = 1.f;
+    vDSP_vfill(&val1, in1, 1, size);
     print(in1, size);
 
     float in2[size];
-    fill(in2, size, -1.f);
+    float val2 = -1.f;
+    vDSP_vfill(&val2, in2, 1, size);
     print(in2, size);
 
     float out[size];
@@ -67,11 +70,13 @@ void test_vDSP_vsma(const int size, int stride=1)
 {
     cout << "madd" << endl;
     float in1[size];
-    fill(in1, size, 2.f);
+    float val1 = 2.f;
+    vDSP_vfill(&val1, in1, 1, size);
     print(in1, size);
 
     float in2[size];
-    fill(in2, size, -1.f);
+    float val2 = -1.f;
+    vDSP_vfill(&val2, in2, 1, size);
     print(in2, size);
 
     float mul = 0.5;
@@ -86,7 +91,8 @@ void test_vDSP_vsmul(const int size, int stride=2)
 {
     cout << "smul";
     float in[size];
-    fill(in, size, 1.f);
+    float val = 1.f;
+    vDSP_vfill(&val, in, 1, size);
     print(in, size);
 
     float mul = 0.f;
@@ -105,6 +111,7 @@ void test_vDSP_vfill(const int size, int stride=1)
     vDSP_vfill(&val, out, stride, size);
     print(out, size);
 };
+// -----------------------------------------------------------------------------
 // void test_vDSP_vmul(const int size, int stride=1)
 // {
 //     cout << "mul" << endl;
@@ -130,11 +137,11 @@ void test_vDSP_meanv(const int size) { };
 
 int main(int argc, char const *argv[])
 {
+    test_vDSP_vfill(10);
     // test_vDSP_vclr1(64);
     // test_copy(10);
     // test_vDSP_vadd(10);
     // test_vDSP_vsma(10);
-    test_vDSP_vfill(10);
     // test_vDSP_vsmul(10);
 
     // vDSP_vadd(audio + audioOffset, 1, scratch, 1, audio + audioOffset, 1, fadeInTime);
