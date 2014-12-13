@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 #include "Accelerate.h"
 
 using std::cout;
@@ -129,7 +130,21 @@ void test_vDSP_vfill(const int size, int stride=1)
 // };
 
 
-void test_vDSP_vclip(const int size) { };
+void test_vDSP_vclip(const int size, int stride=1)
+{
+    cout << "clip" << endl;
+    float in[size];
+    for (int i = 0; i < size; ++i) {
+        in[i] = 2 * sin(M_PI * 2 * 440 * i / 44100);
+    }
+    print(in, size);
+
+    float min = -1.f;
+    float max =  1.f;
+    float out[size];
+    vDSP_vclip(in, stride, &min, &max, out, stride, size);
+    print(out, size);
+};
 void test_vDSP_vramp(const int size) { };
 
 
@@ -137,15 +152,14 @@ void test_vDSP_meanv(const int size) { };
 
 int main(int argc, char const *argv[])
 {
-    test_vDSP_vfill(10);
+    // test_vDSP_vfill(10);
     // test_vDSP_vclr1(64);
     // test_copy(10);
     // test_vDSP_vadd(10);
     // test_vDSP_vsma(10);
     // test_vDSP_vsmul(10);
+    test_vDSP_vclip(128);
 
-    // vDSP_vadd(audio + audioOffset, 1, scratch, 1, audio + audioOffset, 1, fadeInTime);
-    // vDSP_vsma(scratch, 1, &((*i)->multL), audio + audioOffset, 2, audio + audioOffset, 2, fadeInTime);
     // vDSP_meanv(ampScaleBuffer, 1, &smoothedAmpScale, ampScaleBufferCount);
     // vDSP_vsmul(audio, 1, &smoothedAmpScale, audio, 1, bufferSize * channelMode);
     // vDSP_vclip(audio, 1, &lowclip, &highclip, audio, 1, bufferSize * channelMode);
