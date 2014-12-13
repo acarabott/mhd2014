@@ -11,11 +11,11 @@ var dsp = {
       };
     },
 
-    div: function(buf, bufStep, div, out, outStep, size) {
-        for (var i = 0; i < size; i++) {
-            out[i * outStep] = buf[i * buf1Step] / div;
-        }
-    },
+    // div: function(buf, bufStep, div, out, outStep, size) {
+    //     for (var i = 0; i < size; i++) {
+    //         out[i * outStep] = buf[i * buf1Step] / div;
+    //     }
+    // },
 
     ramp: function(start, rampStep, out, step, size) {
         var val = start;
@@ -67,11 +67,11 @@ var dsp = {
         }
     },
 
-    smul: function(buf, bufStep, mul, out, outStep, size) {
-        for (var i = 0; i < size; i++) {
-            out[i * outStep] = buf[i * bufStep] * mul;
-        }
-    },
+    // smul: function(buf, bufStep, mul, out, outStep, size) {
+    //     for (var i = 0; i < size; i++) {
+    //         out[i * outStep] = buf[i * bufStep] * mul;
+    //     }
+    // },
 
     clip: function(buf, bufStep, min, max, out, outStep, size) {
         for (var i = 0; i < size; i++) {
