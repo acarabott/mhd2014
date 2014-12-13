@@ -14,7 +14,7 @@ ramp:
   ramp from 0 to 1 with a multipler of 0.5, check result
 
 mul:
-  mul the buffer by two, check the result
+  add a buffer containing 1s, mul by a buffer with ramp 0 to 1
 
 add:
   add a buffer containing 1s to a buffer containing -1s, check zero
