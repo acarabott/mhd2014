@@ -1,0 +1,40 @@
+clr:
+  check if it's zero
+
+copy:
+  check value
+
+div:
+  create an array containing 1s, divide it by two, check result
+
+ramp:
+  ramp from 0 to 1 on the length of the buffer, check result
+
+ramp:
+  ramp from 0 to 1 with a multipler of 0.5, check result
+
+mul:
+  mul the buffer by two, check the result
+
+add:
+  add a buffer containing 1s to a buffer containing -1s, check zero
+
+add:
+  ada a buffer containing 2s with a mul of 0.5 to a buffer containing -1s, check
+  zero
+
+mean:
+  do a ramp from 0 to 1, check the mean is 0.5
+
+fill:
+  fill with 1s, check the result
+
+smul:
+  get a buffer with 1s, mul every even value by 0
+
+clip:
+  get a buffer like so:
+    2 * Math.sin(Math.PI * 2 * 440 * i / 44100), for i in 0 -> size 
+
+  clip in [-1; 1], check no values are outside the range
+
