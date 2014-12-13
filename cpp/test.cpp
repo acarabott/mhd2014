@@ -113,22 +113,24 @@ void test_vDSP_vfill(const int size, int stride=1)
     print(out, size);
 };
 // -----------------------------------------------------------------------------
-// void test_vDSP_vmul(const int size, int stride=1)
-// {
-//     cout << "mul" << endl;
-//     float in1[size];
-//     fill(in1, size, 1);
-//     print(in1, size);
+void test_vDSP_vmul(const int size, int stride=1)
+{
+    cout << "mul" << endl;
+    float in1[size];
+    fill(in1, size, 1.f);
+    print(in1, size);
 
-//     float in2[size];
-//     ramp(in2, size, 0.f, 1.f);
-//     print(in2, size);
+    float in2[size];
+    float start = 0.f;
+    float end = 1.f;
+    float step = (end - start) / size;
+    vDSP_vramp(&start, &step, in2, 1, size);
+    print(in2, size);
 
-//     float out[size];
+    float out[size];
 
-//     vDSP_vmul(in1, stride, in2, stride, out, stride, size);
-// };
-
+    vDSP_vmul(in1, stride, in2, stride, out, stride, size);
+};
 
 void test_vDSP_vclip(const int size, int stride=1)
 {
