@@ -1,0 +1,8 @@
+vDSP_vadd
+vDSP_vsma
+vDSP_meanv
+vDSP_vsmul
+vDSP_vclip
+vDSP_vramp
+vDSP_vmul
+vDSP_vfill
