@@ -14,13 +14,13 @@ ramp:
   ramp from 0 to 1 with a multipler of 0.5, check result
 
 mul:
-  mul the buffer by two, check the result
+  add a buffer containing 1s, mul by a buffer with ramp 0 to 1
 
 add:
   add a buffer containing 1s to a buffer containing -1s, check zero
 
-mulAdd:
-  ada a buffer containing 2s with a mul of 0.5 to a buffer containing -1s, check
+madd:
+  add a buffer containing 2s with a mul of 0.5 to a buffer containing -1s, check
   zero
 
 mean:
@@ -34,7 +34,7 @@ smul:
 
 clip:
   get a buffer like so:
-    2 * Math.sin(Math.PI * 2 * 440 * i / 44100), for i in 0 -> size 
+    2 * Math.sin(Math.PI * 2 * 440 * i / 44100), for i in 0 -> size
 
   clip in [-1; 1], check no values are outside the range
 
