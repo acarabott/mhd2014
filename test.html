@@ -68,9 +68,10 @@ window.onload = function() {
   var testcases = {
     "clr": function() {
       var input = ones_array();
-      dsp.clr(input, 1, ARRAY_SIZE);
+      var output = ones_array();
+      dsp.clr(output, 1, ARRAY_SIZE);
       for (var i = 0; i < ARRAY_SIZE; i++) {
-        if (input[i] != 0) {
+        if (output[i] != 0) {
           return {
             status: false,
             message: "input is not zero at index " + i
@@ -80,7 +81,7 @@ window.onload = function() {
       return {
         status: true,
         message: "all elements are zero",
-        arrays: [input, input]
+        arrays: [input, output]
       };
     },
     "copy": function() {
