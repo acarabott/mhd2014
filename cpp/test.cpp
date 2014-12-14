@@ -41,7 +41,6 @@ void test_vDSP_vclr1(const int size)
     print(in, size, output);
     vDSP_vclr(in, 1, size);
     print(in, size, output);
-    output << endl;
 }
 // -----------------------------------------------------------------------------
 void test_copy(const int size)
@@ -54,7 +53,6 @@ void test_copy(const int size)
     print(in, size, output);
     output << endl;
     print(in, size, output);
-    output << endl;
 }
 // -----------------------------------------------------------------------------
 void test_vDSP_vadd(const int size, int stride=1)
@@ -101,8 +99,8 @@ void test_vDSP_vsma(const int size, int stride=1)
 // -----------------------------------------------------------------------------
 void test_vDSP_vsmul(const int size, int stride=2)
 {
-    ofstream output("results/smu");
-    // output << "smul";
+    ofstream output("results/smul");
+    // output << "smul" << endl;
 
     float in[size];
     float val = 1.f;
@@ -111,10 +109,10 @@ void test_vDSP_vsmul(const int size, int stride=2)
 
     float mul = 0.f;
 
-    float out[size];
-    vDSP_vsmul(in, stride, &mul, out, stride, size);
-    print(out, size, output);
+    vDSP_vsmul(in, stride, &mul, in, stride, size / stride);
+    print(in, size, output);
     // output << "BAD RESULT?" << endl;
+
 };
 // -----------------------------------------------------------------------------
 void test_vDSP_vfill(const int size, int stride=1)
@@ -146,6 +144,7 @@ void test_vDSP_vmul(const int size, int stride=1)
     float out[size];
 
     vDSP_vmul(in1, stride, in2, stride, out, stride, size);
+    print(out, size, output);
 };
 // -----------------------------------------------------------------------------
 void test_vDSP_vclip(const int size, int stride=1)
@@ -202,7 +201,7 @@ int main(int argc, char const *argv[])
     test_copy(128);
     test_vDSP_vadd(128);
     test_vDSP_vsma(128);
-    test_vDSP_vsmul(128);
+    test_vDSP_vsmul(16);
     test_vDSP_vclip(128);
     test_vDSP_vramp(128);
     test_vDSP_meanv(128);
