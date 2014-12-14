@@ -146,6 +146,7 @@ void test_vDSP_vmul(const int size, int stride=1)
     float out[size];
 
     vDSP_vmul(in1, stride, in2, stride, out, stride, size);
+    print(out, size, output);
 };
 // -----------------------------------------------------------------------------
 void test_vDSP_vclip(const int size, int stride=1)
