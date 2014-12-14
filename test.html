@@ -240,6 +240,27 @@ window.onload = function() {
         message: "all elements have been filed",
         arrays: [input, output]
       };
+    },
+    "div": function() {
+      var output = new Float32Array(ARRAY_SIZE);
+      var input = ones_array();
+
+      dsp.div(input, 1, 2.0, output, 1, ARRAY_SIZE);
+
+      for (var i = 0; i < ARRAY_SIZE; i++) {
+        if (output[i] !== 0.5) {
+          console.log("NOT!", output[i]);
+          return {
+            status: false,
+            message: "output is not 0.5 at index " + i
+          };
+        }
+      }
+      return {
+        status: true,
+        message: "all elements have been filed",
+        arrays: [input, output]
+      };
     }
   };
 

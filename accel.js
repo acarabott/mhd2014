@@ -11,11 +11,11 @@ var dsp_scalar = {
       };
     },
 
-    // div: function(buf, bufStep, div, out, outStep, size) {
-    //     for (var i = 0; i < size; i++) {
-    //         out[i * outStep] = buf[i * buf1Step] / div;
-    //     }
-    // },
+    div: function(buf, bufStep, div, out, outStep, size) {
+        for (var i = 0; i < size; i++) {
+            out[i * outStep] = buf[i * bufStep] / div;
+        }
+    },
 
     ramp: function(start, rampStep, out, step, size) {
         var val = start;

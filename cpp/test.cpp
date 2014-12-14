@@ -194,6 +194,21 @@ void test_vDSP_meanv(const int size, int stride=1)
     output << out << endl;
 };
 // =============================================================================
+void test_vDSP_vsdiv(const int size, int stride=1)
+{
+    ofstream output("results/div");
+
+    float in[size];
+    float val = 1.f;
+    vDSP_vfill(&val, in, stride, size);
+    print(in, size, output);
+
+    float out[size];
+    float denom = 2.f;
+    vDSP_vsdiv(in, stride, &denom, out, stride, size);
+    print(out, size, output);
+}
+
 int main(int argc, char const *argv[])
 {
     test_vDSP_vfill(128);
@@ -206,6 +221,7 @@ int main(int argc, char const *argv[])
     test_vDSP_vramp(128);
     test_vDSP_meanv(128);
     test_vDSP_vmul(128);
+    test_vDSP_vsdiv(128);
 
     return 0;
 }
