@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm out
 for i in *
 do
   if [ $i = "concat.sh" ]
