@@ -77,7 +77,7 @@ void test_vDSP_vadd(const int size, int stride=1)
 // -----------------------------------------------------------------------------
 void test_vDSP_vsma(const int size, int stride=1)
 {
-    ofstream output("results/madd");
+    ofstream output("results/mulAdd");
     // output << "madd" << endl;
     float in1[size];
     float val1 = 2.f;
