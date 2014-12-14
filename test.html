@@ -67,7 +67,7 @@ window.onload = function() {
   }
   var testcases = {
     "clr": function() {
-      var input = random_array();
+      var input = ones_array();
       dsp.clr(input, 1, ARRAY_SIZE);
       for (var i = 0; i < ARRAY_SIZE; i++) {
         if (input[i] != 0) {
@@ -79,11 +79,12 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements are zero"
+        message: "all elements are zero",
+        arrays: [input, input]
       };
     },
     "copy": function() {
-      var input = random_array();
+      var input = ones_array();
       var output = new Float32Array(ARRAY_SIZE);
       dsp.copy(input, output, ARRAY_SIZE);
       for (var i = 0; i < ARRAY_SIZE; i++) {
@@ -96,7 +97,8 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements have been copied"
+        message: "all elements have been copied",
+        arrays: [input, output]
       };
     },
     "ramp": function() {
@@ -110,13 +112,14 @@ window.onload = function() {
         if (reference[i] != output[i]) {
           return {
             status: false,
-            message: "output is different at index " + i
+            message: "output is different at index " + i,
           };
         }
       }
       return {
         status: true,
-        message: "ramp is correct"
+        message: "ramp is correct",
+        arrays: [output]
       };
     },
     "mul": function() {
@@ -137,7 +140,8 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements have been copied"
+        message: "all elements have been copied",
+        arrays: [input1, ramp, output]
       };
     },
     "add": function() {
@@ -155,7 +159,8 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements have been added"
+        message: "all elements have been added",
+        arrays: [input1, input2, output]
       };
     },
     "mulAdd": function() {
@@ -173,7 +178,8 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements have been added"
+        message: "all elements have been added",
+        arrays: [input1, input2, output]
       };
     },
     "mean": function() {
@@ -191,10 +197,11 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "mean is fuzzy-correct"
+        message: "mean is fuzzy-correct",
+        arrays: [input, output]
       };
     },
-    "mean": function() {
+    "fill": function() {
       var output = new Float32Array(ARRAY_SIZE);
 
       dsp.fill(1.0, output, 1, ARRAY_SIZE);
@@ -209,7 +216,8 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements have been filed"
+        message: "all elements have been filed",
+        arrays: [output]
       };
     },
     "clip": function() {
@@ -228,12 +236,15 @@ window.onload = function() {
       }
       return {
         status: true,
-        message: "all elements have been filed"
+        message: "all elements have been filed",
+        arrays: [input, output]
       };
     }
   };
 
 var root = $("#tests");
+
+var output = "";
 
 function test_all(prefix) {
   for (var i in testcases) {
@@ -244,13 +255,28 @@ function test_all(prefix) {
     console.log(rv.status);
     el.className = rv.status ? "success" : "failed";
     el.innerHTML = "[" + prefix + "] " + i + ": " + rv.message;
+    output += i + "\n";
+    for (var i = 0; i < rv.arrays.length; i++) {
+      for (var j = 0; j < rv.arrays[i].length; j++) {
+        output += (rv.arrays[i][j] + "").slice(0,4)  + "\n";
+      }
+      output += "\n";
+    }
     root.appendChild(el);
   }
 }
 
-["SIMD", "SCALAR"].forEach(function(e) {
-  test_all(e);
-});
+// ["SIMD", "SCALAR"].forEach(function(e) {
+//   test_all(e);
+// });
+test_all("SCALAR");
+
+var dwnld = document.createElement("a");
+dwnld.href = URL.createObjectURL(new Blob([output], {type: "text/plain"}));
+dwnld.download = "output.txt"
+document.body.appendChild(dwnld);
+dwnld.click();
+
 }
     </script>
   </body>
