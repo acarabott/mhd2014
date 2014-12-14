@@ -201,7 +201,7 @@ int main(int argc, char const *argv[])
     test_copy(128);
     test_vDSP_vadd(128);
     test_vDSP_vsma(128);
-    test_vDSP_vsmul(16);
+    test_vDSP_vsmul(128);
     test_vDSP_vclip(128);
     test_vDSP_vramp(128);
     test_vDSP_meanv(128);
