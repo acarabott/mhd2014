@@ -149,9 +149,9 @@ window.onload = function() {
       var input1 = ones_array();
       var input2 = minus_ones_array();
       var output = new Float32Array(ARRAY_SIZE);
-      dsp.mul(input1, 1, input2, 1, output, 1, ARRAY_SIZE);
+      dsp.add(input1, 1, input2, 1, output, 1, ARRAY_SIZE);
       for (var i = 0; i < ARRAY_SIZE; i++) {
-        if (output[i] == 0) {
+        if (output[i] != 0) {
           return {
             status: false,
             message: "output is not null at index " + i
