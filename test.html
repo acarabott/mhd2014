@@ -280,15 +280,17 @@ function test_all(prefix) {
     el.className = rv.status ? "success" : "failed";
     el.innerHTML = "[" + prefix + "] " + i + ": " + rv.message;
     output += i + "\n";
-    for (var i = 0; i < rv.arrays.length; i++) {
-      for (var j = 0; j < rv.arrays[i].length; j++) {
-        var val = rv.arrays[i][j];
-        var end = val < 0 ? 5 : 4;
-        val = (val + "").slice(0,end);
-        val = val.length <= 2 ? val + ".0" : val;
-        output += val + "\n";
+    if (rv.arrays !== undefined) {
+      for (var i = 0; i < rv.arrays.length; i++) {
+        for (var j = 0; j < rv.arrays[i].length; j++) {
+          var val = rv.arrays[i][j];
+          var end = val < 0 ? 5 : 4;
+          val = (val + "").slice(0,end);
+          val = val.length <= 2 ? val + ".0" : val;
+          output += val + "\n";
+        }
+        output += "\n";
       }
-      output += "\n";
     }
     root.appendChild(el);
   });
